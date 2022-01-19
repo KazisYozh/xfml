@@ -1,0 +1,10 @@
+{
+  "global": {
+    "$--color-primary": "#6D38FF"
+  },
+  "local": {
+    "$--select-option-height": "44px",
+    "$--select-option-selected-font-color": "#6D38FF",
+    "$--select-input-focus-border-color": "#6D38FF"
+  }
+}

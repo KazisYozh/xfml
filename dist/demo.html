@@ -1,0 +1,19 @@
+<meta charset="utf-8">
+<title>xfamily demo</title>
+<script src="https://unpkg.com/vue"></script>
+<script src="./xfamily.umd.js"></script>
+
+<link rel="stylesheet" href="./xfamily.css">
+
+
+<div id="app">
+  <demo></demo>
+</div>
+
+<script>
+new Vue({
+  components: {
+    demo: xfamily
+  }
+}).$mount('#app')
+</script>
