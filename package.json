@@ -2,7 +2,7 @@
   "name": "xfamily",
   "version": "0.1.0",
   "license": "MIT",
-  "main": "./dist/xfamily.common.js",
+  "main": "./dist/xfamily.umd.js",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
