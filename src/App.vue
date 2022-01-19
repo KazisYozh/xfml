@@ -44,8 +44,10 @@ import ImportToken from './components/ImportToken.vue'
 import Settings from './components/Settings.vue'
 import {tokenSelectionTitle, nativeTokens, uniswap_tokens_git_gist} from './utils'
 import {ethers} from "ethers";
+import store from './store';
 
 export default {
+  store,
   name: 'App',
   components: {
     Header,
