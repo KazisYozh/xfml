@@ -2,7 +2,7 @@
   "name": "xfamily",
   "version": "0.1.0",
   "license": "MIT",
-  "main": "./dist/xfamily.umd.js",
+  "main": "./dist/xfamily.common.js",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -11,11 +11,7 @@
     "lint": "vue-cli-service lint"
   },
   "files": [
-    "dist/*",
-    "src/*",
-    "public/*",
-    "*.json",
-    "*.js"
+    "dist/*"
   ],
   "dependencies": {
     "@uniswap/sdk-core": "3.0.1",
