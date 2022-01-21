@@ -22,7 +22,13 @@ export default {
 .close-icon {
     width: 16px;
     height: 16px;
-    margin: 8px 10px 4px;
+}
+.close-icon-wrapper {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .close-icon-wrapper:hover {
     background-color: #F0F2FA;

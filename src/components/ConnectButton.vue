@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import { ethers } from "ethers";
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import * as providers from "@ethersproject/providers";
 // import xfamilyABI from "../assets/ABI/xfamilyAbi.json";
 
 export default {
@@ -18,15 +18,18 @@ export default {
   },
   methods: {
     async onClickWalletConnectLogin() {
-
+      console.log('process.env.NODE_ENV', process.env.NODE_ENV);
       if (this.$store.getters.connectBtnTitle === 'Connect Wallet') {
         const provider = new WalletConnectProvider({
           infuraId: "9c4edeefd4864bb493cec3e1071fec15",
           rpc: {1337: "http://localhost:8545/"},
           chainId: process.env.NODE_ENV === 'development' ? 1337 : this.$store.getters.network,
         });
+        console.log(process.env.NODE_ENV === 'development' ? 1337 : this.$store.getters.network);
+        console.log('provider', provider);
         const accounts = await provider.enable();
-        const etherWeb3Provider = new ethers.providers.Web3Provider(provider);
+        console.log('accounts', accounts);
+        const etherWeb3Provider = new providers.Web3Provider(provider);
         await this.$store.dispatch('logIn', { provider: 'WalletConnect', account: accounts[0], etherWeb3Provider });
         this.$store.commit('setConnectBtnTitle', 'Go to Swap');
 

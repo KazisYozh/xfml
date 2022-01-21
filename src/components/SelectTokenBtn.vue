@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style>
-.select-button {
+div .select-button {
   font-family: TTFirsNeue, Avenir, Helvetica, Arial, sans-serif;
   color: #15151F;
   font-weight: 600;
@@ -45,30 +45,34 @@ export default {
   border: none;
   border-radius: 12px;
 }
-.select-button:hover {
+div .select-button img {
+  width: 24px;
+  height: 24px;
+}
+div .select-button:hover {
   background-color: #FFFFFF;
   color: #6D38FF;
 }
-.select-button:hover .icon-chevron-down {
+div .select-button:hover .icon-chevron-down {
   background: url("../assets/icons/chevron-down-purple.svg");
 }
-.select-button span {
+div .select-button span {
   display: flex;
   align-items: center;
 }
-.select-button span span {
+div .select-button span span {
   margin-left: 8px;
   margin-right: 10px;
 }
-.select-button img {
+div .select-button img {
   margin-top: 0px;
 }
-.icon-chevron-down {
+div .icon-chevron-down {
   background: url("../assets/icons/chevron-down.svg");
   width: 10px;
   height: 6px;
 }
-.select-button i {
+div .select-button i {
   margin-left: 10px;
 }
 </style>

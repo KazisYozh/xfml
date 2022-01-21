@@ -12,9 +12,9 @@
 </template>
 
 <script>
-// import Web3 from 'web3';
 import SelectNetwork from './SelectNetwork'
 import wltcnct from '../assets/icons/wltcnct.svg'
+import 'element-ui/lib/theme-chalk/reset.css'
 
 // let acc;
 

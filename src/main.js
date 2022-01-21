@@ -34,8 +34,7 @@ Vue.directive('maxlen', {
 });
 
 new Vue({
-  param: 'something',
-  el: '#app',
+  el: '#app-xfamily',
   store,
   render: h => h(App),
   data: () => ({

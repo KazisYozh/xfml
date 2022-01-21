@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import {utils, Contract} from 'ethers';
 import NestedModal from './NestedModal.vue';
 import BackBtn from './BackBtn.vue';
 import TokenList from './TokenList.vue';
@@ -24,6 +23,8 @@ import SearchInput from './SearchInput.vue';
 import {tokenSelectionTitle, LocalStorageKeys, populateTokensWithBalances, populateTokensWithUSDCBalances, debounce} from '../utils';
 import none_icon from '../assets/icons/none-icon.svg';
 import genericERC20Abi from '../assets/ABI/ERC20ABI.json';
+import {Contract} from "@ethersproject/contracts";
+import {isAddress} from "@ethersproject/address";
 
 export default {
     name: 'TokenSelection',
@@ -54,7 +55,7 @@ export default {
         async getTokensList(searchInput) {
             if (!searchInput) return this.options = [...this.fetchedTokens, ...this.importedTokens];
 
-            const isValidAddress = utils.isAddress(searchInput);
+            const isValidAddress = isAddress(searchInput);
 
             if (isValidAddress && this.$store.getters.etherWeb3Provider) {
                 const erc20Contract = new Contract(searchInput, genericERC20Abi, this.$store.getters.etherWeb3Provider);

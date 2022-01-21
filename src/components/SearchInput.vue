@@ -28,6 +28,10 @@ export default {
     font-weight: 400;
     color: #15151F;
     padding-left: 0;
+    height: 44px;
+    background: #F0F2FA;
+    border: none;
+    font-family: TTFirsNeue, Avenir, Helvetica, Arial, sans-serif;
 }
 .search-input input::placeholder {
     color: #777A8F;
@@ -49,7 +53,7 @@ export default {
 .close-icon:hover {
     cursor: pointer;
 }
-.el-input-group__prepend {
+.search-input .el-input-group__prepend {
     background-color: #F0F2FA;
     border: none;
     border-top-left-radius: 12px;
@@ -57,7 +61,7 @@ export default {
     padding-left: 14.5px;
     padding-right: 12px;
 }
-.el-input-group__append {
+.search-input .el-input-group__append {
     background-color: #F0F2FA;
     border: none;
     border-top-right-radius: 12px;

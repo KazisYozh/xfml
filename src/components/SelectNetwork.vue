@@ -1,14 +1,15 @@
 <template>
   <el-select v-model="value" value-key="value" placeholder="Select" class="network" v-on:change="setNetwork">
     <template slot="prefix"><img class="prefix" :src="value.photo" /></template>
-    <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item">
-      <img class="inSelect" :src="item.photo">
-      <span>{{ item.label }}</span>
-    </el-option>
+      <el-option
+          class="option"
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item">
+        <img class="inSelect" :src="item.photo">
+        <span>{{ item.label }}</span>
+      </el-option>
   </el-select>
 </template>
 
@@ -67,36 +68,39 @@ export default {
 .el-scrollbar__wrap::-webkit-scrollbar {
   width: 0;
 }
-.el-select-dropdown__wrap, .el-scrollbar__wrap {
-  overflow: hidden;
-}
-.prefix {
-  margin-top: 10px;
-}
-img {
-  width: 24px;
-  height: 24px;
-}
-.inSelect {
-  margin-right: 7px;
-}
-.el-popper[x-placement^=bottom] {
-  margin-top: 8px;
-}
-.el-popper .popper__arrow {
-  display: none;
-}
-.el-input__prefix {
-  left: 12px;
-}
-.el-input--prefix .el-input__inner {
-  padding-left: 44px;
-}
-.el-select-dropdown {
+/*div .el-select-dropdown__wrap, .el-scrollbar__wrap {*/
+/*  overflow: hidden;*/
+/*}*/
+body > .el-select-dropdown {
   box-shadow: none;
   border: none;
 }
-.el-input__inner {
+body > .el-popper[x-placement^=bottom] {
+  margin-top: 8px;
+}
+
+body > .el-select-dropdown .popper__arrow {
+  display: none;
+}
+.network .prefix {
+  margin-top: 10px;
+}
+.network img {
+  width: 24px;
+  height: 24px;
+}
+div .inSelect {
+  width: 24px;
+  height: 24px;
+  margin-right: 7px;
+}
+.network .el-input__prefix {
+  left: 12px;
+}
+.network .el-input--prefix .el-input__inner {
+  padding-left: 44px;
+}
+.network .el-input__inner {
   color: black;
   font-weight: 600;
   height: 44px;
@@ -105,31 +109,31 @@ img {
   border-radius: 12px;
   font-family: TTFirsNeue, Avenir, Helvetica, Arial, sans-serif;
 }
-.el-select-dropdown__list {
+div .el-select-dropdown__list {
   border-radius: 12px;
   font-weight: 600;
   background: #F0F2FA;
   font-family: TTFirsNeue, Avenir, Helvetica, Arial, sans-serif;
 }
-.el-select-dropdown__item:nth-last-child(n+2) {
+div .el-select-dropdown__item:nth-last-child(n+2) {
   border-bottom: 2px solid white;
 }
-.el-select-dropdown__item:first-child {
+div .el-select-dropdown__item:first-child {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
-.el-select-dropdown__item:last-child {
+div .el-select-dropdown__item:last-child {
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
-.el-select-dropdown__item.hover {
+div .el-select-dropdown__item.hover {
   background-color: #E4E8F2;
 }
-.el-select-dropdown__item.selected {
+div .el-select-dropdown__item.selected {
   font-weight: 600;
   color: #8a60ff;
 }
-.el-select-dropdown__item {
+div .el-select-dropdown__item {
   color: black;
   display: flex;
   align-items: center;
@@ -137,10 +141,10 @@ img {
   padding: 0 12px;
   height: 44px;
 }
-.el-scrollbar__view, .el-select-dropdown__list{
+div .el-scrollbar__view, .el-select-dropdown__list{
   padding: 0px;
 }
-.el-select__caret {
+.network .el-select__caret {
   font-weight: 900;
 }
 
@@ -151,7 +155,7 @@ img {
   background-color: #E4E8F2;
 }
 
-.el-popper {
+.options .el-popper {
   border-radius: 12px;
 }
 </style>

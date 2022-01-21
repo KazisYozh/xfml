@@ -1,4 +1,5 @@
-import {ethers} from "ethers";
+import {BigNumber} from "@ethersproject/bignumber";
+
 
 export const tokenSelectionTitle = {
     get: 'You get',
@@ -20,8 +21,8 @@ export const nativeTokens = {
 }
 
 export const gasOptionsPriorityPercent = {
-  oneHundred: ethers.BigNumber.from(100),
-  twentyFive: ethers.BigNumber.from(25),
-  five: ethers.BigNumber.from(5),
-  two: ethers.BigNumber.from(2)
+  oneHundred: BigNumber.from(100),
+  twentyFive: BigNumber.from(25),
+  five: BigNumber.from(5),
+  two: BigNumber.from(2)
 }

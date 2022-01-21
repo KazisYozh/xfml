@@ -1,6 +1,5 @@
 import Vuex from 'vuex';
 import Vue from "vue";
-import {ethers} from "ethers";
 import ERC20ABI from "@/assets/ABI/ERC20ABI.json";
 import {computePoolAddress} from "@uniswap/v3-sdk";
 import {ChainID, gasOptionsPriorityPercent} from '../utils';
@@ -8,6 +7,9 @@ import {CurrencyAmount, Percent, Token, TradeType, Ether} from "@uniswap/sdk-cor
 import {AlphaRouter} from "@uniswap/smart-order-router";
 import JSBI from 'jsbi';
 import {populateTokensWithUSDCBalance} from "@/utils/USDbalance";
+import {Contract} from "@ethersproject/contracts";
+import * as providers from "@ethersproject/providers";
+import {formatEther, formatUnits, parseUnits} from "@ethersproject/units";
 
 Vue.use(Vuex);
 
@@ -265,6 +267,7 @@ export default new Vuex.Store({
       // console.log(`Gas Used USD: ${route.estimatedGasUsedUSD.toFixed(6)}`);
       const route = getters.autoRouterInput;
       const gasOptions = getters.gasOptions.filter(option => option.category === getters.gasPriceCategory);
+      //maxPriorityFeePerGas: gasOptions[0].priority
       console.log('route', route);
       console.log('gasOptions', gasOptions);
       console.log('gasOptions priority', gasOptions[0].priority);
@@ -272,8 +275,7 @@ export default new Vuex.Store({
       const transaction = {
         data: route.data,
         to: uniswapV3SwapRouter2,
-        value: route.value,
-        maxPriorityFeePerGas: gasOptions[0].priority
+        value: route.value
       };
 
       // const transaction = {
@@ -284,7 +286,7 @@ export default new Vuex.Store({
 
       if (route.tokenIn.isToken) {
         const maxValue = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
-        const tokenContract = new ethers.Contract(getters.inputToken.address, ERC20ABI, signer);
+        const tokenContract = new Contract(getters.inputToken.address, ERC20ABI, signer);
         const allowance = await tokenContract.allowance(getters.account, uniswapV3SwapRouter2);
         const allowanceComparison = allowance._hex === maxValue;
         if (!allowanceComparison) {
@@ -358,6 +360,7 @@ export default new Vuex.Store({
 
       const route = getters.autoRouterOutput;
       const gasOptions = getters.gasOptions.filter(option => option.category === getters.gasPriceCategory);
+      // maxPriorityFeePerGas: gasOptions[0].priority
       console.log('route', route);
       console.log('gasOptions', gasOptions);
       console.log('gasOptions priority', gasOptions[0].priority);
@@ -366,13 +369,12 @@ export default new Vuex.Store({
       const transaction = {
         data: route.data,
         to: uniswapV3SwapRouter2,
-        value: route.value,
-        maxPriorityFeePerGas: gasOptions[0].priority
+        value: route.value
       };
 
       if (route.tokenIn.isToken) {
         const maxValue = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
-        const tokenContract = new ethers.Contract(getters.inputToken.address, ERC20ABI, signer);
+        const tokenContract = new Contract(getters.inputToken.address, ERC20ABI, signer);
         const allowance = await tokenContract.allowance(getters.account, uniswapV3SwapRouter2);
         const allowanceComparison = allowance._hex === maxValue;
         if (!allowanceComparison) {
@@ -397,7 +399,7 @@ export default new Vuex.Store({
       const vaultFee = 100;
       const vaultAddress = '0x1B21B125be9284D17550e97BD4215b9EBd507047';
       const account = getters.account;
-      const provider = new ethers.providers.JsonRpcProvider("https://eth-mainnet.alchemyapi.io/v2/LHhUmi_SflwbY-znjWmregjsns0ndRKl");
+      const provider = new providers.JsonRpcProvider("https://eth-mainnet.alchemyapi.io/v2/LHhUmi_SflwbY-znjWmregjsns0ndRKl");
 
       const router = new AlphaRouter({ chainId, provider });
 
@@ -418,7 +420,7 @@ export default new Vuex.Store({
         token1.symbol
       );
 
-      const amountForSwap = ethers.utils.parseUnits(getters.inputAmountValue, token0.decimals).toString();
+      const amountForSwap = parseUnits(getters.inputAmountValue, token0.decimals).toString();
       console.log('amountForSwap', amountForSwap.toString());
       const currencyAmount = CurrencyAmount.fromRawAmount(tokenIn, amountForSwap);
 
@@ -461,7 +463,7 @@ export default new Vuex.Store({
       const vaultFee = 100;
       const vaultAddress = '0x1B21B125be9284D17550e97BD4215b9EBd507047';
       const account = getters.account;
-      const provider = new ethers.providers.JsonRpcProvider("https://eth-mainnet.alchemyapi.io/v2/LHhUmi_SflwbY-znjWmregjsns0ndRKl");
+      const provider = new providers.JsonRpcProvider("https://eth-mainnet.alchemyapi.io/v2/LHhUmi_SflwbY-znjWmregjsns0ndRKl");
 
       const router = new AlphaRouter({ chainId, provider });
 
@@ -599,27 +601,27 @@ export default new Vuex.Store({
     async balance({commit, getters}) {
       if (getters.account) {
         const balanceETH = await getters.etherWeb3Provider.getBalance(getters.account);
-        commit('setBalance', Number(ethers.utils.formatEther(balanceETH)).toFixed(4));
+        commit('setBalance', Number(formatEther(balanceETH)).toFixed(4));
         // commit('setBalance', Math.round(balanceETH.toString() / 10 ** 14) / divider);
 
         if (getters.inputToken.symbol === 'ETH') {
-          commit('setBalanceInput', Number(ethers.utils.formatEther(balanceETH)).toFixed(4));
+          commit('setBalanceInput', Number(formatEther(balanceETH)).toFixed(4));
         } else {
-          const tokenContract = new ethers.Contract(getters.tokenIn, ERC20ABI, getters.etherWeb3Provider);
+          const tokenContract = new Contract(getters.tokenIn, ERC20ABI, getters.etherWeb3Provider);
           const balanceToken = await tokenContract.balanceOf(getters.account);
           const decimals = await tokenContract.decimals();
 
-          commit('setBalanceInput', Number(ethers.utils.formatUnits(balanceToken, decimals)).toFixed(4));
+          commit('setBalanceInput', Number(formatUnits(balanceToken, decimals)).toFixed(4));
         }
 
         if (getters.outputToken.symbol === 'ETH') {
-          commit('setBalanceOutput', Number(ethers.utils.formatEther(balanceETH)).toFixed(4));
+          commit('setBalanceOutput', Number(formatEther(balanceETH)).toFixed(4));
         } else {
-          const tokenContract = new ethers.Contract(getters.tokenOut, ERC20ABI, getters.etherWeb3Provider);
+          const tokenContract = new Contract(getters.tokenOut, ERC20ABI, getters.etherWeb3Provider);
           const balanceToken = await tokenContract.balanceOf(getters.account);
           const decimals = await tokenContract.decimals();
 
-          commit('setBalanceOutput', Number(ethers.utils.formatUnits(balanceToken, decimals)).toFixed(4));
+          commit('setBalanceOutput', Number(formatUnits(balanceToken, decimals)).toFixed(4));
         }
       }
     },
@@ -650,7 +652,7 @@ export default new Vuex.Store({
     async getGasPrice({commit, getters}, provider) {
       const gasPrice = await provider.getGasPrice();
       const oneHundred = gasOptionsPriorityPercent.oneHundred;
-      const gasPriceGwei = Number(ethers.utils.formatUnits(gasPrice, "gwei"));
+      const gasPriceGwei = Number(formatUnits(gasPrice, "gwei"));
       const instantCategoryPriority = gasPrice.mul(gasOptionsPriorityPercent.twentyFive).div(oneHundred);
       const instantCategory = instantCategoryPriority.add(gasPrice);
       const highCategoryPriority = gasPrice.mul(gasOptionsPriorityPercent.five).div(oneHundred);
@@ -671,7 +673,7 @@ export default new Vuex.Store({
       console.log('mediumCategory', mediumCategory.toString());
       console.log('lowCategory', lowCategory.toString());
       console.log('---------------------------------')
-      console.log('instantCategoryPriority', instantCategoryPriority.toString(), ethers.utils.formatUnits(instantCategoryPriority, 'gwei'));
+      console.log('instantCategoryPriority', instantCategoryPriority.toString(), formatUnits(instantCategoryPriority, 'gwei'));
       console.log('highCategoryPriority', highCategoryPriority.toString());
       console.log('mediumCategoryPriority', mediumCategoryPriority.toString());
       console.log('lowCategoryPriority', lowCategoryPriority.toString());
@@ -679,19 +681,19 @@ export default new Vuex.Store({
 
       const gasOptions = [
         {
-          gasPriceGweiRange: `${gasPriceGwei.toFixed(2)} - ${Number(ethers.utils.formatUnits(instantCategory, 'gwei')).toFixed(2)} Gwei`,
+          gasPriceGweiRange: `${gasPriceGwei.toFixed(2)} - ${Number(formatUnits(instantCategory, 'gwei')).toFixed(2)} Gwei`,
           priority: instantCategoryPriority
         },
         {
-          gasPriceGweiRange: `${gasPriceGwei.toFixed(2)} - ${Number(ethers.utils.formatUnits(highCategory, 'gwei')).toFixed(2)} Gwei`,
+          gasPriceGweiRange: `${gasPriceGwei.toFixed(2)} - ${Number(formatUnits(highCategory, 'gwei')).toFixed(2)} Gwei`,
           priority: highCategoryPriority
         },
         {
-          gasPriceGweiRange: `${gasPriceGwei.toFixed(2)} - ${Number(ethers.utils.formatUnits(mediumCategory, 'gwei')).toFixed(2)} Gwei`,
+          gasPriceGweiRange: `${gasPriceGwei.toFixed(2)} - ${Number(formatUnits(mediumCategory, 'gwei')).toFixed(2)} Gwei`,
           priority: mediumCategoryPriority
         },
         {
-          gasPriceGweiRange: `${gasPriceGwei.toFixed(2)} - ${Number(ethers.utils.formatUnits(lowCategory, 'gwei')).toFixed(2)} Gwei`,
+          gasPriceGweiRange: `${gasPriceGwei.toFixed(2)} - ${Number(formatUnits(lowCategory, 'gwei')).toFixed(2)} Gwei`,
           priority: lowCategoryPriority
         },
       ]

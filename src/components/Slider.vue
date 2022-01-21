@@ -55,25 +55,25 @@ export default {
 </script>
 
 <style>
-.el-slider__runway {
+.block .el-slider__runway {
   margin: 0;
   margin-bottom: 16px;
   height: 4px;
 }
-.el-slider__bar {
+.block .el-slider__bar {
   height: 4px;
   background: linear-gradient(
       93.58deg, #3246FF 0%, #AD26FF 100%);
 }
-.el-slider__stop {
+.block .el-slider__stop {
   height: 4px;
   width: 4px;
 }
-.el-slider__button-wrapper {
+.block .el-slider__button-wrapper {
   z-index: 100;
   top: -16px;
 }
-.el-slider__button {
+.block .el-slider__button {
   width: 4px;
   height: 4px;
   border: 4px solid #A12AFF;

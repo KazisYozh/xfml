@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app-xfamily">
     <Header :openSettings="openSettings" />
     <Network />
     <Send :openTokenSelectionModal="setSendTitle" />
@@ -43,8 +43,18 @@ import ManageTokens from './components/ManageTokens.vue'
 import ImportToken from './components/ImportToken.vue'
 import Settings from './components/Settings.vue'
 import {tokenSelectionTitle, nativeTokens, uniswap_tokens_git_gist} from './utils'
-import {ethers} from "ethers";
+import {getDefaultProvider} from "@ethersproject/providers";
 import store from './store';
+import 'element-ui/lib/theme-chalk/reset.css';
+
+import Vue from 'vue';
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+// import App from './App.vue';
+
+Vue.use(ElementUI);
+
+
 
 export default {
   store,
@@ -71,7 +81,7 @@ export default {
   },
   async mounted() {
     // const urlNetwork = process.env.NODE_ENV === 'development' ? 'http://localhost:8545' :'https://eth-mainnet.alchemyapi.io/v2/LHhUmi_SflwbY-znjWmregjsns0ndRKl'
-    const provider = ethers.getDefaultProvider('https://eth-mainnet.alchemyapi.io/v2/LHhUmi_SflwbY-znjWmregjsns0ndRKl');
+    const provider = getDefaultProvider('http://localhost:8545');
     provider.on("block", async () => await this.$store.dispatch('getGasPrice', provider));
     const uniswapResponse = await fetch(uniswap_tokens_git_gist);
     const parsedUniswapResponse = await uniswapResponse.json();
@@ -126,7 +136,7 @@ export default {
   src: local("TTFirsNeue"),
   url(./fonts/TTFirsNeue/TTFirsNeue-Regular.ttf) format("truetype");
 }
-#app {
+#app-xfamily {
   font-family: TTFirsNeue, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -24,6 +24,7 @@
 import Slider from './Slider.vue';
 import SelectTokenBtn from "./SelectTokenBtn.vue";
 import {debounce} from "@/utils";
+import 'element-ui/lib/theme-chalk/reset.css';
 
 export default {
   name: "Send",
@@ -108,6 +109,14 @@ export default {
 .inputToken {
   display: flex;
   justify-content: space-between;
+}
+.inputToken .el-input__inner {
+  color: black;
+  font-weight: 600;
+  /*height: 44px;*/
+  background: #F0F2FA;
+  border: none;
+  font-family: TTFirsNeue, Avenir, Helvetica, Arial, sans-serif;
 }
 .send {
   background-color: #F0F2FA;

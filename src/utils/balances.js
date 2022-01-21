@@ -1,5 +1,6 @@
-import { Contract, utils } from 'ethers';
 import genericERC20Abi from '../assets/ABI/ERC20ABI.json';
+import {Contract} from "@ethersproject/contracts";
+import {formatUnits} from "@ethersproject/units";
 
 const GRAPH_API_URL = "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3";
 
@@ -81,7 +82,7 @@ const getTokenAmount = async (token, userAddress, provider, decimals) => {
     }
 
 
-    const balanceInEth = utils.formatUnits(balanceInWei, decimals);
+    const balanceInEth = formatUnits(balanceInWei, decimals);
     const valueToReturn = Math.ceil(parseFloat(balanceInEth)) === 0 ? 0 : balanceInEth;
     return valueToReturn;
 };

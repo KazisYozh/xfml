@@ -53,6 +53,7 @@ export default {
 }
 .settings-header .el-button:hover {
     border: none;
+    color: #71768A;
     background-color: #E4E8F2;
     transition: all .2s ease-out;
 }

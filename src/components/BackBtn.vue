@@ -22,7 +22,13 @@ export default {
 .chevron-back-icon {
     width: 16px;
     height: 16px;
-    margin: 8px 10px 4px;
+}
+.chevron-back-icon-wrapper {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .chevron-back-icon-wrapper:hover {
     background-color: #F0F2FA;

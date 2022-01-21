@@ -125,4 +125,11 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+.outputToken .el-input__inner {
+  color: black;
+  font-weight: 600;
+  background: #F0F2FA;
+  border: none;
+  font-family: TTFirsNeue, Avenir, Helvetica, Arial, sans-serif;
+}
 </style>
